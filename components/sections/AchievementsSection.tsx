@@ -6,11 +6,15 @@ import { ACHIEVEMENTS } from "@/data/content";
 import { SectionHeading } from "@/components/animation/SectionHeading";
 import { Reveal } from "@/components/animation/Reveal";
 import { TiltCard } from "@/components/ui/TiltCard";
+import { AchievementsBackgroundCanvas } from "@/components/backgrounds/AchievementsBackgroundCanvas";
 
 export function AchievementsSection() {
   return (
-    <section className="relative z-10 py-24 px-6 sm:px-12 md:px-20 bg-[#07070A]">
-      <div className="mx-auto max-w-7xl">
+    <section id="achievements" className="relative z-10 py-24 px-6 sm:px-12 md:px-20 overflow-hidden">
+      {/* Radiant Aurora & Rising Golden/Magenta Stardust Sparks Background */}
+      <AchievementsBackgroundCanvas />
+
+      <div className="mx-auto max-w-7xl relative z-10">
         <SectionHeading
           number="05"
           title="HONORS & HACKATHONS"

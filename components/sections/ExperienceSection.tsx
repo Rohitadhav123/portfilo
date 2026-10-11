@@ -1,11 +1,12 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
-import { Calendar, Briefcase, ChevronRight, Users, CheckCircle2 } from "lucide-react";
+import { Calendar, Briefcase, ChevronRight, Users, CheckCircle2, ExternalLink } from "lucide-react";
 import { EXPERIENCES } from "@/data/content";
 import { SectionHeading } from "@/components/animation/SectionHeading";
 import { Reveal } from "@/components/animation/Reveal";
 import { gsap } from "@/lib/gsap";
+import { ExperienceBackgroundCanvas } from "@/components/backgrounds/ExperienceBackgroundCanvas";
 
 export function ExperienceSection() {
   const lineRef = useRef<HTMLDivElement>(null);
@@ -35,8 +36,11 @@ export function ExperienceSection() {
   }, []);
 
   return (
-    <section id="experience" className="relative z-10 py-24 px-6 sm:px-12 md:px-20 bg-[#07070A]">
-      <div className="mx-auto max-w-7xl">
+    <section id="experience" className="relative z-10 py-24 px-6 sm:px-12 md:px-20 overflow-hidden">
+      {/* Animated Circuit Tracks & Data Highway Background */}
+      <ExperienceBackgroundCanvas />
+
+      <div className="mx-auto max-w-7xl relative z-10">
         <SectionHeading
           number="02"
           title="EXPERIENCE"
@@ -86,11 +90,24 @@ export function ExperienceSection() {
                 {exp.projects?.map((proj, idx) => (
                   <Reveal key={idx} direction="up" delay={idx * 0.15 + 0.2}>
                     <div className="group rounded-2xl border border-white/10 bg-[#0E0E14] p-6 sm:p-8 hover:border-[#8B5CF6]/50 transition-all duration-300 shadow-xl">
-                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
-                        <h4 className="font-display text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
-                          <ChevronRight className="h-5 w-5 text-[#8B5CF6] group-hover:translate-x-1 transition-transform" />
-                          <span>{proj.name}</span>
-                        </h4>
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+                        <div className="flex flex-wrap items-center gap-3">
+                          <h4 className="font-display text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+                            <ChevronRight className="h-5 w-5 text-[#8B5CF6] group-hover:translate-x-1 transition-transform" />
+                            <span>{proj.name}</span>
+                          </h4>
+                          {proj.liveUrl && (
+                            <a
+                              href={proj.liveUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1.5 rounded-full bg-[#22D3EE]/10 border border-[#22D3EE]/30 px-3 py-1 font-mono text-xs text-[#22D3EE] hover:bg-[#22D3EE] hover:text-black transition-all shadow-sm group/btn"
+                            >
+                              <span>LIVE DEMO</span>
+                              <ExternalLink className="h-3 w-3 transition-transform group-hover/btn:translate-x-0.5" />
+                            </a>
+                          )}
+                        </div>
                         <span className="font-mono text-xs text-[#9A9AB0]">
                           {proj.period}
                         </span>

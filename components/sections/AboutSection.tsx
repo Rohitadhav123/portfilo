@@ -8,6 +8,7 @@ import { SectionHeading } from "@/components/animation/SectionHeading";
 import { Reveal } from "@/components/animation/Reveal";
 import { Parallax } from "@/components/animation/Parallax";
 import { gsap } from "@/lib/gsap";
+import { AboutBackgroundCanvas } from "@/components/backgrounds/AboutBackgroundCanvas";
 
 export function AboutSection() {
   const textRef = useRef<HTMLParagraphElement>(null);
@@ -41,8 +42,11 @@ export function AboutSection() {
   const aboutWords = PERSONAL_INFO.about.split(" ");
 
   return (
-    <section id="about" className="relative z-10 py-24 px-6 sm:px-12 md:px-20 bg-[#07070A]">
-      <div className="mx-auto max-w-7xl">
+    <section id="about" className="relative z-10 py-24 px-6 sm:px-12 md:px-20 overflow-hidden">
+      {/* Dynamic Animated Section Background */}
+      <AboutBackgroundCanvas />
+
+      <div className="mx-auto max-w-7xl relative z-10">
         <SectionHeading
           number="01"
           title="ABOUT ME"

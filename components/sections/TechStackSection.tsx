@@ -5,6 +5,7 @@ import { TECH_CATEGORIES } from "@/data/content";
 import { SectionHeading } from "@/components/animation/SectionHeading";
 import { Reveal } from "@/components/animation/Reveal";
 import { Cpu, Zap, Layers, Server, Database, Shield, Wrench } from "lucide-react";
+import { TechStackBackgroundCanvas } from "@/components/backgrounds/TechStackBackgroundCanvas";
 
 export function TechStackSection() {
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
@@ -27,7 +28,10 @@ export function TechStackSection() {
   };
 
   return (
-    <section id="skills" className="relative z-10 py-24 px-6 sm:px-12 md:px-20 bg-[#07070A]">
+    <section id="skills" className="relative z-10 py-24 px-6 sm:px-12 md:px-20 overflow-hidden">
+      {/* Dynamic Animated Synaptic Neural Ecosystem Background */}
+      <TechStackBackgroundCanvas />
+
       {/* Background Radial Glow */}
       <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[600px] w-[600px] rounded-full bg-[#22D3EE]/5 blur-[160px]" />
 

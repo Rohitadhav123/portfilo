@@ -5,6 +5,7 @@ import { PROCESS_STEPS } from "@/data/content";
 import { SectionHeading } from "@/components/animation/SectionHeading";
 import { Reveal } from "@/components/animation/Reveal";
 import { gsap } from "@/lib/gsap";
+import { ProcessBackgroundCanvas } from "@/components/backgrounds/ProcessBackgroundCanvas";
 
 export function ProcessSection() {
   const lineRef = useRef<SVGLineElement>(null);
@@ -34,8 +35,11 @@ export function ProcessSection() {
   }, []);
 
   return (
-    <section className="relative z-10 py-24 px-6 sm:px-12 md:px-20 bg-[#07070A]">
-      <div className="mx-auto max-w-7xl">
+    <section id="process" className="relative z-10 py-24 px-6 sm:px-12 md:px-20 overflow-hidden">
+      {/* Dynamic Animated Cyber Pipeline & Conveyor Stream Background */}
+      <ProcessBackgroundCanvas />
+
+      <div className="mx-auto max-w-7xl relative z-10">
         <SectionHeading
           number="07"
           title="DEVELOPMENT PROCESS"

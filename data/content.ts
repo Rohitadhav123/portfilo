@@ -8,8 +8,9 @@ export interface Project {
   highlights: string[];
   liveUrl?: string;
   githubUrl?: string;
-  visualType: "healthcare" | "invohydra" | "lms" | "recipe";
+  visualType: "healthcare" | "invohydra" | "lms" | "recipe" | "namaste-emr" | "medical-store";
   accentColor: string;
+  period?: string;
 }
 
 export interface ExperienceItem {
@@ -23,6 +24,7 @@ export interface ExperienceItem {
     tech: string[];
     description: string;
     responsibilities: string[];
+    liveUrl?: string;
   }[];
   tech?: string[];
   responsibilities?: string[];
@@ -107,6 +109,51 @@ export const PROJECTS: Project[] = [
     accentColor: "#22D3EE",
   },
   {
+    id: "namaste-icd11-emr",
+    title: "NAMASTE-ICD11 EMR",
+    subtitle: "Indian Terminology to WHO ICD-11 Mapping Gateway",
+    category: "Full-Stack / Healthcare Interoperability",
+    period: "Dec 2025 – Feb 2026",
+    description:
+      "Developed a NAMASTE Code to ICD-11 Mapping System using the FHIR R4 standard to enable seamless interoperability between Indian healthcare terminology and the WHO ICD-11 classification.",
+    tech: ["FHIR R4", "ICD-11", "Next.js", "Node.js", "Express", "MongoDB"],
+    highlights: [
+      "FHIR R4 standard compliance for Indian healthcare & Ayush terminology",
+      "Seamless cross-mapping from NAMASTE codes to WHO ICD-11 classifications",
+      "High-performance REST API gateway connecting EMRs with terminology microservices",
+      "Production-ready deployment engineered for high-availability clinical systems",
+    ],
+    liveUrl: "https://sih-25026-gilt.vercel.app/",
+    visualType: "namaste-emr",
+    accentColor: "#10B981",
+  },
+  {
+    id: "medical-store",
+    title: "MEDICAL-STORE (E-COMM)",
+    subtitle: "MediNexus Pharmacy Inventory & Prescription Ordering Platform",
+    category: "Full-Stack / Healthcare E-Commerce",
+    period: "Jun 2025 – Nov 2025",
+    description:
+      "Developed a Medical Store Management System within the MediNexus platform using Next.js, Node.js, Express.js, and MongoDB for efficient medicine inventory and order management. Implemented features such as medicine catalog, stock management, prescription-based ordering, secure authentication, and real-time inventory updates to streamline pharmacy operations.",
+    tech: [
+      "Next.js",
+      "Node.js",
+      "Express.js",
+      "MongoDB",
+      "Payment Gateway",
+      "Tailwind CSS",
+    ],
+    highlights: [
+      "Digital medicine catalog with batch & expiry stock management",
+      "Prescription-based ordering & digital doctor verification",
+      "Real-time inventory updates with automated low-stock reorder alerts",
+      "Secure authentication & integrated payment gateway checkout",
+    ],
+    liveUrl: "https://medical-store-bice.vercel.app/",
+    visualType: "medical-store",
+    accentColor: "#06B6D4",
+  },
+  {
     id: "invohydra",
     title: "INVOHYDRA",
     subtitle: "SaaS GST Billing & Invoicing Suite",
@@ -129,6 +176,7 @@ export const PROJECTS: Project[] = [
       "Automated financial reports & payment gateway integration",
       "Architected with scalable full-stack system patterns",
     ],
+    liveUrl: "https://www.invohydra.com/",
     visualType: "invohydra",
     accentColor: "#8B5CF6",
   },
@@ -176,6 +224,7 @@ export const EXPERIENCES: ExperienceItem[] = [
       {
         name: "InvoHydra",
         period: "January 2026 — August 2026",
+        liveUrl: "https://www.invohydra.com/",
         tech: [
           "Next.js",
           "React.js",

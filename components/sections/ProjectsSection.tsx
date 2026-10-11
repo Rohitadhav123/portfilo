@@ -1,11 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
-import { ExternalLink, Sparkles, Activity, FileText, BookOpen, Utensils, Shield, Bell } from "lucide-react";
+import { ExternalLink, Sparkles, Activity, FileText, BookOpen, Utensils, Shield, Bell, Calendar, ArrowRight, Package, ShoppingBag } from "lucide-react";
 import { PROJECTS, Project } from "@/data/content";
 import { SectionHeading } from "@/components/animation/SectionHeading";
 import { Reveal } from "@/components/animation/Reveal";
 import { Magnetic } from "@/components/ui/Magnetic";
+import { ProjectsBackgroundCanvas } from "@/components/backgrounds/ProjectsBackgroundCanvas";
 
 function GithubIcon({ className = "h-4 w-4" }: { className?: string }) {
   return (
@@ -227,11 +228,235 @@ export function RecipeVisual() {
   );
 }
 
+export function NamasteEMRVisual() {
+  const [selectedMapping, setSelectedMapping] = useState(0);
+
+  const mappings = [
+    {
+      namasteCode: "NAM-AYU-4102",
+      namasteTerm: "Vataja Kasa",
+      category: "Respiratory",
+      icdCode: "MD32.0",
+      icdTerm: "Chronic Bronchitis / Cough",
+      status: "Mapped & Verified",
+    },
+    {
+      namasteCode: "NAM-AYU-1084",
+      namasteTerm: "Prameha",
+      category: "Endocrine & Metabolic",
+      icdCode: "5A11",
+      icdTerm: "Type 2 Diabetes Mellitus",
+      status: "Mapped & Verified",
+    },
+    {
+      namasteCode: "NAM-AYU-7320",
+      namasteTerm: "Sandhivata",
+      category: "Musculoskeletal",
+      icdCode: "FA00",
+      icdTerm: "Osteoarthritis of Knee",
+      status: "Mapped & Verified",
+    },
+  ];
+
+  const current = mappings[selectedMapping];
+
+  return (
+    <div className="relative w-full h-full min-h-[340px] rounded-2xl bg-[#07070A] border border-white/10 p-5 overflow-hidden flex flex-col justify-between select-none">
+      {/* Top Bar with Gateway Status */}
+      <div className="flex items-center justify-between border-b border-white/10 pb-3">
+        <div className="flex items-center gap-2 font-mono text-xs text-emerald-400">
+          <Activity className="h-4 w-4" />
+          <span>NAMASTE ⇄ ICD-11 TERMINOLOGY GATEWAY</span>
+        </div>
+        <div className="flex items-center gap-1.5 font-mono text-[10px] text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/30">
+          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping" />
+          <span>FHIR R4 ACTIVE</span>
+        </div>
+      </div>
+
+      {/* Interactive Mapping Selector Tabs */}
+      <div className="my-3 flex flex-col gap-3">
+        <div className="flex items-center gap-1.5 bg-white/5 p-1 rounded-xl border border-white/10 overflow-x-auto">
+          {mappings.map((m, idx) => (
+            <button
+              key={m.namasteCode}
+              onClick={() => setSelectedMapping(idx)}
+              className={`px-3 py-1 text-[11px] font-mono rounded-lg transition-all whitespace-nowrap cursor-pointer ${
+                selectedMapping === idx
+                  ? "bg-emerald-500 text-black font-bold shadow-md shadow-emerald-500/20"
+                  : "text-[#9A9AB0] hover:text-white"
+              }`}
+            >
+              Case 0{idx + 1}: {m.namasteTerm}
+            </button>
+          ))}
+        </div>
+
+        {/* Live Mapping Comparison Card */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 items-center rounded-xl bg-white/5 p-3.5 border border-white/10">
+          {/* Source NAMASTE */}
+          <div className="flex flex-col gap-1 rounded-lg bg-[#0E0E14] p-3 border border-white/10">
+            <span className="text-[10px] font-mono text-[#F59E0B] uppercase">Indian NAMASTE Term</span>
+            <span className="font-mono text-xs font-bold text-white">{current.namasteCode}</span>
+            <span className="text-xs text-[#9A9AB0] truncate">{current.namasteTerm} ({current.category})</span>
+          </div>
+
+          {/* Target WHO ICD-11 */}
+          <div className="flex flex-col gap-1 rounded-lg bg-[#0E0E14] p-3 border border-emerald-500/30">
+            <span className="text-[10px] font-mono text-emerald-400 uppercase">WHO ICD-11 Classification</span>
+            <span className="font-mono text-xs font-bold text-emerald-300">{current.icdCode}</span>
+            <span className="text-xs text-[#9A9AB0] truncate">{current.icdTerm}</span>
+          </div>
+        </div>
+
+        {/* FHIR ConceptMap Resource Mock */}
+        <div className="rounded-xl bg-[#0E0E14] p-2.5 border border-white/5 font-mono text-[10px] text-[#9A9AB0]">
+          <div className="flex items-center justify-between text-white/70 mb-1">
+            <span className="text-[#22D3EE]">ConceptMap.translate()</span>
+            <span className="text-emerald-400">200 OK • FHIR Standard</span>
+          </div>
+          <div className="text-emerald-400/90 font-mono truncate">
+            &#123; "source": "NAMASTE/{current.namasteCode}", "target": "ICD11/{current.icdCode}", "equivalence": "equivalent" &#125;
+          </div>
+        </div>
+      </div>
+
+      {/* Footer Info */}
+      <div className="flex items-center justify-between text-[10px] font-mono text-[#9A9AB0] border-t border-white/10 pt-3">
+        <span>INTEROPERABILITY PIPELINE</span>
+        <span className="text-emerald-400 font-semibold">Dec 2025 – Feb 2026</span>
+      </div>
+    </div>
+  );
+}
+
+export function MedicalStoreVisual() {
+  const [activeTab, setActiveTab] = useState<"catalog" | "prescription" | "inventory">("catalog");
+
+  const medicines = [
+    { name: "Amoxicillin 500mg", category: "Antibiotic", stock: 184, price: "₹140", status: "In Stock" },
+    { name: "Paracetamol 650mg", category: "Analgesic", stock: 320, price: "₹32", status: "In Stock" },
+    { name: "Montelukast 10mg", category: "Antihistamine", stock: 12, price: "₹185", status: "Low Stock" },
+  ];
+
+  return (
+    <div className="relative w-full h-full min-h-[340px] rounded-2xl bg-[#07070A] border border-white/10 p-5 overflow-hidden flex flex-col justify-between select-none">
+      {/* Top Bar with Platform Title & Gateway Badge */}
+      <div className="flex items-center justify-between border-b border-white/10 pb-3">
+        <div className="flex items-center gap-2 font-mono text-xs text-[#06B6D4]">
+          <ShoppingBag className="h-4 w-4" />
+          <span>MEDINEXUS // PHARMACY E-COMMERCE</span>
+        </div>
+        <div className="flex items-center gap-1.5 font-mono text-[10px] text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/30">
+          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping" />
+          <span>GATEWAY ONLINE</span>
+        </div>
+      </div>
+
+      {/* Switcher Navigation */}
+      <div className="my-3 flex flex-col gap-3">
+        <div className="flex items-center gap-1.5 bg-white/5 p-1 rounded-xl border border-white/10">
+          {(["catalog", "prescription", "inventory"] as const).map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`flex-1 py-1 text-[11px] font-mono rounded-lg capitalize transition-all cursor-pointer text-center ${
+                activeTab === tab
+                  ? "bg-[#06B6D4] text-black font-bold shadow-md shadow-[#06B6D4]/20"
+                  : "text-[#9A9AB0] hover:text-white"
+              }`}
+            >
+              {tab === "catalog" ? "Catalog" : tab === "prescription" ? "Rx Order" : "Stock Sync"}
+            </button>
+          ))}
+        </div>
+
+        {/* Dynamic Tab Body */}
+        {activeTab === "catalog" && (
+          <div className="flex flex-col gap-2">
+            {medicines.map((item, idx) => (
+              <div
+                key={idx}
+                className="flex items-center justify-between rounded-xl bg-white/5 p-2.5 border border-white/5 font-mono text-xs"
+              >
+                <div className="flex items-center gap-2.5">
+                  <div className="h-7 w-7 rounded-lg bg-[#06B6D4]/10 border border-[#06B6D4]/30 flex items-center justify-center text-[#06B6D4]">
+                    <Package className="h-3.5 w-3.5" />
+                  </div>
+                  <div>
+                    <div className="text-white font-semibold text-xs">{item.name}</div>
+                    <div className="text-[10px] text-[#9A9AB0]">{item.category}</div>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="text-[#06B6D4] font-bold text-xs">{item.price}</div>
+                  <div className={`text-[10px] ${item.status === "Low Stock" ? "text-amber-400" : "text-emerald-400"}`}>
+                    {item.stock} left
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {activeTab === "prescription" && (
+          <div className="flex flex-col gap-2.5 rounded-xl bg-white/5 p-3.5 border border-white/10 font-mono text-xs">
+            <div className="flex items-center justify-between border-b border-white/10 pb-2">
+              <span className="text-[#9A9AB0] text-[11px]">PRESCRIPTION VERIFICATION</span>
+              <span className="text-emerald-400 text-[10px] bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/30">
+                DOCTOR APPROVED
+              </span>
+            </div>
+            <div className="text-white text-xs">Rx-ID: #MN-2025-8841</div>
+            <div className="text-[#9A9AB0] text-[11px]">
+              Digital signature valid • 2 items authorized for order dispatch
+            </div>
+            <div className="flex items-center justify-between pt-1 text-[11px]">
+              <span className="text-[#06B6D4]">Payment: Cashfree / Razorpay</span>
+              <span className="text-emerald-400 font-bold">READY TO DISPATCH</span>
+            </div>
+          </div>
+        )}
+
+        {activeTab === "inventory" && (
+          <div className="flex flex-col gap-2.5 rounded-xl bg-white/5 p-3 border border-white/10 font-mono text-xs">
+            <div className="flex justify-between text-[11px]">
+              <span className="text-white">Real-Time Inventory Health</span>
+              <span className="text-emerald-400">98.4% Available</span>
+            </div>
+            <div className="h-2 w-full rounded-full bg-white/10 overflow-hidden">
+              <div className="h-full w-[84%] bg-gradient-to-r from-[#06B6D4] to-emerald-400 rounded-full" />
+            </div>
+            <div className="grid grid-cols-2 gap-2 text-[10px] text-[#9A9AB0] pt-1">
+              <div className="rounded bg-black/40 p-1.5 border border-white/5">
+                <span>Total SKUs: 1,420</span>
+              </div>
+              <div className="rounded bg-black/40 p-1.5 border border-white/5">
+                <span>Auto-Reorder: Active</span>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Footer Info */}
+      <div className="flex items-center justify-between text-[10px] font-mono text-[#9A9AB0] border-t border-white/10 pt-3">
+        <span>MONGODB + NEXT.js E-COMM ENGINE</span>
+        <span className="text-[#06B6D4] font-semibold">Jun 2025 – Nov 2025</span>
+      </div>
+    </div>
+  );
+}
+
 export function ProjectsSection() {
   const renderVisual = (type: Project["visualType"]) => {
     switch (type) {
       case "healthcare":
         return <HealthcareVisual />;
+      case "namaste-emr":
+        return <NamasteEMRVisual />;
+      case "medical-store":
+        return <MedicalStoreVisual />;
       case "invohydra":
         return <InvoHydraVisual />;
       case "lms":
@@ -244,8 +469,11 @@ export function ProjectsSection() {
   };
 
   return (
-    <section id="projects" className="relative z-10 py-24 px-6 sm:px-12 md:px-20 bg-[#07070A]">
-      <div className="mx-auto max-w-7xl">
+    <section id="projects" className="relative z-10 py-24 px-6 sm:px-12 md:px-20 overflow-hidden">
+      {/* 3D Isometric Blueprint Mesh & Sonar Wave Background */}
+      <ProjectsBackgroundCanvas />
+
+      <div className="mx-auto max-w-7xl relative z-10">
         <SectionHeading
           number="03"
           title="FEATURED PROJECTS"
@@ -267,10 +495,19 @@ export function ProjectsSection() {
 
               <div className="w-full lg:w-1/2 flex flex-col justify-between gap-6">
                 <div>
-                  <div className="flex items-center gap-3 font-mono text-xs text-[#9A9AB0] uppercase tracking-wider mb-2">
+                  <div className="flex flex-wrap items-center gap-3 font-mono text-xs text-[#9A9AB0] uppercase tracking-wider mb-2">
                     <span className="text-[#8B5CF6]">0{idx + 1}</span>
                     <span>//</span>
                     <span>{project.category}</span>
+                    {project.period && (
+                      <>
+                        <span>//</span>
+                        <span className="text-[#22D3EE] inline-flex items-center gap-1 font-semibold">
+                          <Calendar className="h-3 w-3" />
+                          {project.period}
+                        </span>
+                      </>
+                    )}
                   </div>
 
                   <h3 className="font-display text-3xl sm:text-4xl font-bold text-white group-hover:text-[#22D3EE] transition-colors">

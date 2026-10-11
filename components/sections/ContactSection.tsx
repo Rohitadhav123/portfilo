@@ -8,6 +8,7 @@ import { Reveal } from "@/components/animation/Reveal";
 import { Magnetic } from "@/components/ui/Magnetic";
 import { Toast } from "@/components/ui/Toast";
 import { copyToClipboard } from "@/lib/utils";
+import { ContactBackgroundCanvas } from "@/components/backgrounds/ContactBackgroundCanvas";
 
 function GithubIcon({ className = "h-4 w-4" }: { className?: string }) {
   return (
@@ -42,13 +43,16 @@ export function ContactSection() {
   };
 
   return (
-    <section id="contact" className="relative z-10 py-28 px-6 sm:px-12 md:px-20 bg-[#07070A] overflow-hidden">
+    <section id="contact" className="relative z-10 py-28 px-6 sm:px-12 md:px-20 overflow-hidden">
+      {/* Broadcasting Beacon Signals & Bioluminescent Aurora Background */}
+      <ContactBackgroundCanvas />
+
       {/* Background Interactive Orb & Radial Mesh Glow */}
       <div className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 h-[500px] w-[500px] sm:h-[700px] sm:w-[700px] rounded-full bg-gradient-to-tr from-[#8B5CF6]/20 via-[#22D3EE]/10 to-[#EC4899]/20 blur-[140px]" />
 
       <div className="mx-auto max-w-7xl relative z-10">
         <SectionHeading
-          number="08"
+          number="07"
           title="GET IN TOUCH"
           subtitle="Initiate a conversation for full-stack roles, contract work, or tech discussions."
           accentColor="#8B5CF6"

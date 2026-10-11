@@ -6,6 +6,7 @@ import { PERSONAL_INFO } from "@/data/content";
 import { SectionHeading } from "@/components/animation/SectionHeading";
 import { Reveal } from "@/components/animation/Reveal";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { EducationBackgroundCanvas } from "@/components/backgrounds/EducationBackgroundCanvas";
 
 export function EducationSection() {
   const [cgpa, setCgpa] = useState(0);
@@ -38,8 +39,11 @@ export function EducationSection() {
   }, []);
 
   return (
-    <section className="relative z-10 py-24 px-6 sm:px-12 md:px-20 bg-[#07070A]">
-      <div className="mx-auto max-w-7xl">
+    <section id="education" className="relative z-10 py-24 px-6 sm:px-12 md:px-20 overflow-hidden">
+      {/* 3D Wireframe Octahedron & Orbital Gyroscope Background */}
+      <EducationBackgroundCanvas />
+
+      <div className="mx-auto max-w-7xl relative z-10">
         <SectionHeading
           number="06"
           title="ACADEMIC BACKGROUND"
